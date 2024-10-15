@@ -1,0 +1,240 @@
+/* Reset some basic styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* General body styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Navigation bar */
+nav {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+}
+
+nav h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Centering the search bar and filter */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: max-content;
+    background-color: white;
+}
+
+/* Genre filter dropdown styling */
+#genre-filter {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    appearance: none;
+    width: 180px;
+    background-color: white;
+    background-image: url('data:image/svg+xml;base64,...'); /* Replace with a dropdown arrow */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+}
+
+/* Search input styling */
+#search-bar {
+    padding: 10px;
+    font-size: 16px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Search button styling */
+#search-button {
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#search-button:hover {
+    background-color: #555;
+}
+
+/* Add focus effects for input fields */
+#genre-filter:focus,
+#search-bar:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Book card styling */
+.book-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 250px;
+    margin: 0 auto;
+}
+
+.book-card img {
+    width: 100%;
+    height: auto;
+    max-height: 300px; /* Set a maximum height */
+    object-fit: cover; /* Ensure the image retains aspect ratio */
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.book-card h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.book-card p {
+    font-size: 14px;
+    color: #555;
+}
+
+.book-card p {
+    font-size: 14px;
+    color: #555;
+}
+
+.wishlist-icon {
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination-btn {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.pagination-btn.active {
+    background-color: #007bff;
+}
+
+.pagination-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+/* RESPONSIVENESS */
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .search-container {
+        gap: 20px;
+    }
+
+    #search-bar {
+        width: 400px;
+    }
+
+    #genre-filter {
+        width: 200px;
+    }
+}
+
+/* Medium devices (tablets, 768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .search-container {
+        gap: 15px;
+    }
+
+    #search-bar {
+        width: 350px;
+    }
+
+    #genre-filter {
+        width: 180px;
+    }
+}
+
+/* Small devices (mobile, 767px and below) */
+@media (max-width: 767px) {
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .search-container {
+        flex-direction: column;
+        width: 100%;
+        max-width: 95%;
+    }
+
+    #search-bar, 
+    #genre-filter {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    #search-button {
+        width: 100%;
+    }
+
+    .book-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .pagination-btn {
+        padding: 8px 12px;
+        margin: 0 3px;
+    }
+}
