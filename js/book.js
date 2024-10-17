@@ -25,7 +25,7 @@ function renderBookDetails(book) {
     bookDetailsElement.innerHTML = `
         <div class="book-details-card">
             <img src="${book.formats['image/jpeg']}" alt="${book.title}">
-            <div>
+            <div class="details-info">
                 <h2>${book.title}</h2>
                 <p><strong>Author:</strong> ${book.authors[0]?.name || 'Unknown Author'}</p>
                 <p><strong>Published:</strong> ${book.publish_date || 'N/A'}</p>
@@ -38,17 +38,35 @@ function renderBookDetails(book) {
     `;
 }
 
-// Function to toggle wishlist in book details
+// Show notification when adding/removing from wishlist
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.classList.add('notification');
+    notification.innerText = message;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.classList.add('fade-out');
+        setTimeout(() => notification.remove(), 500);
+    }, 2000);
+}
+
+// Toggle wishlist status
 function toggleWishlist(bookId) {
     let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
     const book = { id: bookId, title: document.querySelector('h2').textContent };
+    let action = '';
 
     if (wishlist.some(wish => wish.id === bookId)) {
         wishlist = wishlist.filter(wish => wish.id !== bookId);
+        action = 'removed from';
     } else {
         wishlist.push(book);
+        action = 'added to';
     }
     
     localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    showNotification(`Book ${action} your wishlist!`);
     renderBookDetails({ id: bookId });
 }

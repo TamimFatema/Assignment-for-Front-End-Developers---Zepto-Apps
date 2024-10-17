@@ -7,16 +7,19 @@
 
 /* General body styling */
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: #f4f4f4;
     color: #333;
 }
 
 /* Navigation bar */
 nav {
-    background-color: #333;
+    background-color: rgb(0, 31, 63);
     color: white;
     padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 nav h1 {
@@ -28,6 +31,8 @@ nav ul {
     list-style: none;
     display: flex;
     gap: 15px;
+    justify-content: flex-end;
+    margin: 0;
 }
 
 nav ul li a {
@@ -40,18 +45,12 @@ nav ul li a:hover {
     text-decoration: underline;
 }
 
-/* Centering the search bar and filter */
 .search-container {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
-    margin: 20px auto;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: max-content;
-    background-color: white;
+    margin: 0 auto;
 }
 
 /* Genre filter dropdown styling */
@@ -80,11 +79,10 @@ nav ul li a:hover {
 
 /* Search button styling */
 #search-button {
-    background-color: #333;
-    color: white;
+    background-color: rgb(106, 154, 176);
+    color: rgb(0, 31, 63);
     padding: 10px 15px;
     font-size: 16px;
-    border: 1px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -115,7 +113,18 @@ nav ul li a:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
     max-width: 250px;
-    margin: 0 auto;
+    margin: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transition for smooth effect */
+}
+
+.book-card:hover {
+    transform: scale(1.05); /* Slightly increase size */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Increase shadow */
+}
+
+/* Optional: Change background color on hover */
+.book-card:hover {
+    background-color: rgba(58, 109, 140, 0.1); /* Light background color change */
 }
 
 .book-card img {
@@ -173,6 +182,109 @@ nav ul li a:hover {
     cursor: not-allowed;
 }
 
+.wishlist-container {
+    display: flex;
+    flex-wrap: wrap;
+     justify-content: flex-start; 
+    margin: 20px; 
+}
+
+
+.book-details-card {
+    display: flex;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.book-details-card img {
+    width: 300px;
+    height: auto;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+.book-details-card h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.book-details-card p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.details-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.wishlist-icon {
+    font-size: 30px;
+    cursor: pointer;
+    color: red;
+    margin-top: 30px;
+}
+
+.wishlist-icon:hover {
+    color: #ff6666;
+}
+
+/* Notification Styling */
+.notification {
+    position: fixed;
+    top: 10%;
+    right: 10%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+    transition: opacity 0.3s ease-in-out;
+}
+
+
+
+
+.notification.fade-out {
+    opacity: 0;
+}
+.details-button {
+    background-color: rgb(58, 109, 140);
+    color: white;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.details-button:hover {
+    background-color: rgb(40, 90, 115); /* Darker shade on hover */
+}
+
+
+.book-card img {
+    cursor: pointer;
+}
+
+#loading-icon {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    color: rgb(58, 109, 140);
+    font-size: 20px;
+}
 
 /* RESPONSIVENESS */
 /* Large devices (desktops, 992px and up) */

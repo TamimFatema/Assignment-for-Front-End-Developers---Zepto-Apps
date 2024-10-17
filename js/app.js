@@ -7,25 +7,26 @@ let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
 const bookListElement = document.getElementById('book-list');
 const searchInput = document.getElementById('search-bar');
 const genreFilter = document.getElementById('genre-filter');
-const pageNumber = document.getElementById('page-number');
 const paginationElement = document.querySelector('.pagination');
 
-document.getElementById('next-page').addEventListener('click', () => changePage(1));
-document.getElementById('prev-page').addEventListener('click', () => changePage(-1));
-
+// Event listeners for search and genre filter
 searchInput.addEventListener('input', renderBooks);
 genreFilter.addEventListener('change', renderBooks);
 
+// Fetch books from the API
 function fetchBooks() {
+    showLoading(); // Show loading icon
     fetch(`${apiURL}?page=${currentPage}`)
         .then(response => response.json())
         .then(data => {
             books = data.results;
             populateGenres(data.results);
             renderBooks();
+            hideLoading(); // Hide loading icon after fetching
         });
 }
 
+// Render the book list based on the current page and filters
 function renderBooks() {
     const searchTerm = searchInput.value.toLowerCase();
     const genre = genreFilter.value;
@@ -51,6 +52,7 @@ function renderBooks() {
                 <span class="wishlist-icon" onclick="toggleWishlist(${book.id})">
                     ${isWishlisted ? '❤️' : '🤍'}
                 </span>
+                <a href="/html/book.html?id=${book.id}" class="details-button">View Details</a>
             </div>
         `;
     });
@@ -58,23 +60,39 @@ function renderBooks() {
     updatePagination(filteredBooks.length);
 }
 
+// Toggle the wishlist status of a book
 function toggleWishlist(bookId) {
     const book = books.find(b => b.id === bookId);
     if (wishlist.some(wish => wish.id === bookId)) {
         wishlist = wishlist.filter(wish => wish.id !== bookId);
+        showNotification(`Removed ${book.title} from wishlist!`);
     } else {
         wishlist.push(book);
+        showNotification(`Added ${book.title} to wishlist!`);
     }
     localStorage.setItem('wishlist', JSON.stringify(wishlist));
     renderBooks();
 }
 
-function changePage(step) {
-    currentPage += step;
-    if (currentPage < 1) currentPage = 1;
+// Update pagination buttons
+function updatePagination(totalBooks) {
+    const totalPages = Math.ceil(totalBooks / booksPerPage);
+    paginationElement.innerHTML = '';
+
+    for (let i = 1; i <= totalPages; i++) {
+        paginationElement.innerHTML += `
+            <button class="pagination-btn ${currentPage === i ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>
+        `;
+    }
+}
+
+// Go to a specific page
+function goToPage(page) {
+    currentPage = page;
     renderBooks();
 }
 
+// Populate the genre filter
 function populateGenres(books) {
     const genres = new Set(books.flatMap(book => book.subjects));
     genreFilter.innerHTML = '<option value="">All Genres</option>';
@@ -83,21 +101,27 @@ function populateGenres(books) {
     });
 }
 
-function updatePagination(totalBooks) {
-    const totalPages = Math.ceil(totalBooks / booksPerPage);
-
-    paginationElement.innerHTML = `
-        <button id="prev-page" class="pagination-btn" ${currentPage === 1 ? 'disabled' : ''}>Previous</button>
-        ${Array.from({ length: totalPages }, (_, i) => `
-            <button class="pagination-btn ${currentPage === i + 1 ? 'active' : ''}" onclick="goToPage(${i + 1})">${i + 1}</button>
-        `).join('')}
-        <button id="next-page" class="pagination-btn" ${currentPage === totalPages ? 'disabled' : ''}>Next</button>
-    `;
+// Show loading icon
+function showLoading() {
+    document.getElementById('loading-icon').style.display = 'block';
 }
 
-function goToPage(page) {
-    currentPage = page;
-    renderBooks();
+// Hide loading icon
+function hideLoading() {
+    document.getElementById('loading-icon').style.display = 'none';
 }
 
+// Show notification message
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.innerText = message;
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
+// Fetch initial books
 fetchBooks();
